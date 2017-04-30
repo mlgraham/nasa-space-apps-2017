@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>NASA Earth Science Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="https://cesiumjs.org/Cesium/Build/Cesium/Widgets/widgets.css" type="text/css" media="screen" charset="utf-8">
+<style>
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td {
+	background:transparent;
+	border:0;
+	font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size:100%;
+	margin:0;
+	outline:0;
+	padding:0;
+	vertical-align:baseline;
+}
+body { line-height:1; }
+ol,ul { list-style:none; }
+blockquote,q { quotes:none; }
+ins { text-decoration:none; }
+del { text-decoration:line-through; }
+table {
+	border-collapse:collapse;
+	border-spacing:0;
+}
+#content-wrapper {
+	position:relative;
+	width:100%;
+	height:100%;
+	background: #666666;
+}
+
+#header {
+	height: 10%;
+	width: 100%;
+	background: #000000;
+    border-bottom: 2px solid #4e4e4e;
+	background: linear-gradient(#E1E1E1, #757575);
+}
+#col-wrap {
+	height: 85%
+}
+#col-left {
+	height: 100%;
+	width: 30%;
+}
+#col-center {
+	height: 100%;
+	width: 70%;
+}
+/*#col-right {
+	height: 100%;
+	width: 20%;
+}*/
+.col {
+	float: left;
+}
+#head-left, #head-right {
+	color: #FFFFFF;
+}
+#head-left {
+	width:75%;
+	text-align: left;
+}
+#head-right {
+	width:25%;
+	text-align: right;
+}
+#head-left p, #head-right p {
+	padding: 13px 1% 0 1%;
+	height: 45px;
+	line-height: 45px;
+	font-size: 130%;
+	text-shadow: 1px 1px #4e4e4e;
+}
+#head-left p img {
+	height: 50px;
+    position: relative;
+	top: -1px;
+}
+#head-left p span {
+	position: relative;
+	top: -19px;
+}
+
+#col-right-wrap {
+    background: #434343;
+    height: 95%;
+    width: 95%;
+    border-radius: 10px;
+    margin: 0 auto;
+    margin-top:10px;
+    /*overflow: scroll;*/
+}
+
+#right-headers {
+	color: #FFFFFF;
+    padding: 30px;
+}
+.meter-box {
+	background-color: #1F1F1F;
+	margin: 0 30px 30px 30px;
+    text-align: center;
+    padding: 23px 0;
+}
+.meter-value {
+	color: #FF0000;
+	font-size: 200%;
+	margin-bottom: 10px;
+}
+.meter-desc {
+	color: #FFFFFF;
+
+}
+
+#col-left-wrap {
+    background: #B6B6B6;
+    height: 95%;
+    width: 95%;
+    margin: 0 auto;
+    margin-top:10px;
+    font-size: 70%;
+}
+#table-values {
+	overflow: scroll;
+    height: 90%;
+}
+#col-left-wrap p {
+	background: linear-gradient(#D9D9D9, #B6B6B6);
+	cursor:pointer;
+}
+#col-left-wrap p:hover {
+	background: #D9D9D9;
+	cursor:pointer;
+}
+#col-left-wrap p#left-headers {
+	font-weight: bold;
+	background: #D9D9D9;
+	/*cursor: default;*/
+}
+#col-left-wrap p#left-headers:hover {
+	font-weight: bold;
+}
+#col-left-wrap p#left-headers span:hover {
+	text-decoration: underline;
+}
+#col-left-wrap p span {
+	width: 25%;
+    display: inline-block;
+    text-align: center;
+    padding: 20px 0;
+}
+#col-center-wrap {
+    background: #D9D9D9;
+    /*height: 100px;*/
+    height: 175px;
+    width: 100%;
+    margin: 10px 0;
+}
+#col-center-wrap p {
+    text-align: center;
+    padding: 25px 10px;
+}
+#col-center-wrap em {
+    font-weight: bold;
+}
+#footer {
+	width: 100%;
+	text-align: right;
+	height: 3%;
+}
+#footer p {
+	color: #D9D9D9;
+	margin-right: 15px;
+    font-size: 13px;
+}
+
+html {
+  height: 100%;
+}
+#cesiumContainer {
+  height: 95%;
+  margin: 10px 10px 0 0px;
+}
+body {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  height: 100%;
+}
+
+</style>
+</head>
+<body>
+
+<div id="content-wrapper" class="bg">
+
+	<div id="header">
+		<div id="head-left" class="col">
+			<p>
+				<img src="nasa-logo.svg" /><span>Earth Science Dashboard</span>
+			</p>
+		</div>
+		<div id="head-right" class="col">
+			<p>Date</p>
+		</div>
+	</div>
+
+	<div id="col-wrap">
+
+
+		<div id="col-left" class="col">
+			<div id="col-left-wrap">
+				<p id="left-headers">
+					<span>ID</span><span>Motion</span><span>Altitude</span><span>Speed</span>
+				</p>
+				<div id="table-values">
+					<p>
+						<span>ABC000</span><span>0.00</span><span>0 KM</span><span>0 MPS</span>
+					</p>
+					<p>
+						<span>ABC000</span><span>0.00</span><span>0 KM</span><span>0 MPS</span>
+					</p>
+					<p>
+						<span>ABC000</span><span>0.00</span><span>0 KM</span><span>0 MPS</span>
+					</p>
+					<p>
+						<span>ABC000</span><span>0.00</span><span>0 KM</span><span>0 MPS</span>
+					</p>
+					<p>
+						<span>ABC000</span><span>0.00</span><span>0 KM</span><span>0 MPS</span>
+					</p>
+					<p>
+						<span>ABC000</span><span>0.00</span><span>0 KM</span><span>0 MPS</span>
+					</p>
+					<p>
+						<span>ABC000</span><span>0.00</span><span>0 KM</span><span>0 MPS</span>
+					</p>
+					<p>
+						<span>ABC000</span><span>0.00</span><span>0 KM</span><span>0 MPS</span>
+					</p>
+					<p>
+						<span>ABC000</span><span>0.00</span><span>0 KM</span><span>0 MPS</span>
+					</p>
+					<p>
+						<span>ABC000</span><span>0.00</span><span>0 KM</span><span>0 MPS</span>
+					</p>
+					<p>
+						<span>ABC000</span><span>0.00</span><span>0 KM</span><span>0 MPS</span>
+					</p>
+					<p>
+						<span>ABC000</span><span>0.00</span><span>0 KM</span><span>0 MPS</span>
+					</p>
+					<p>
+						<span>ABC000</span><span>0.00</span><span>0 KM</span><span>0 MPS</span>
+					</p>
+					<p>
+						<span>ABC000</span><span>0.00</span><span>0 KM</span><span>0 MPS</span>
+					</p>
+					<p>
+						<span>ABC000</span><span>0.00</span><span>0 KM</span><span>0 MPS</span>
+					</p>
+					<p>
+						<span>ABC000</span><span>0.00</span><span>0 KM</span><span>0 MPS</span>
+					</p>
+					<p>
+						<span>ABC000</span><span>0.00</span><span>0 KM</span><span>0 MPS</span>
+					</p>
+					<p>
+						<span>ABC000</span><span>0.00</span><span>0 KM</span><span>0 MPS</span>
+					</p>
+					<p>
+						<span>ABC000</span><span>0.00</span><span>0 KM</span><span>0 MPS</span>
+					</p>
+				</div>
+			</div>
+		</div>
+
+
+		<div id="col-center" class="col">
+
+			<div id="cesiumContainer"></div>
+
+		</div>
+
+	</div>
+
+	<div id="footer">
+		<p>Team Gaia</p>
+	</div>
+
+</div>
+
+</body>
+
+<script src="https://cesiumjs.org/Cesium/Build/CesiumUnminified/Cesium.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+
+var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];;
+var date = new Date();
+$("#head-right p").text(months[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear());
+
+var viewer = new Cesium.Viewer('cesiumContainer', {
+    baseLayerPicker: true,
+    fullscreenButton: true,
+    homeButton: false,
+    sceneModePicker: false,
+    selectionIndicator: false,
+    timeline: false,
+    animation: false,
+    geocoder: false
+});
+
+function randomAnimation () {
+    var randomRange = viewer.entities._entities._array.length;
+    var randomEntity = Math.floor(Math.random() * (randomRange));
+    viewer.flyTo(viewer.entities._entities._array[randomEntity]);
+    setInterval(function() {
+    	randomAnimation();
+	}, 15000);
+}
+// randomAnimation();
+viewer.zoomTo(viewer.entities);
+
+viewer.dataSources.add(Cesium.CzmlDataSource.load('satellites.czml'));
+
+$(".cesium-widget-credits").css({"position": "relative","top":"100px","overflow":"hidden"});
+
+</script>
+</html>
